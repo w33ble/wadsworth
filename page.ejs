@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Page</title>
+    </head>
+    <% if (!this.noConsole) { %>
+    <div id="output"></div>
+    <script>
+        (function() {
+            var console,
+                oldLog,
+                output = document.getElementById("output");
+
+            function log() {
+                var args = Array.prototype.slice.call(arguments);
+                if (oldLog) {
+                    oldLog.apply(console, args);
+                }
+
+                output.appendChild(
+                    document.createTextNode(args.join('\r\n') + '\r\n'));
+            }
+
+            if (window.console) {
+                console = window.console;
+            } else {
+                window.console = console = {};
+            }
+
+            oldLog = console.log;
+            console.log = log;
+        })();
+    </script>
+    <% } %>
+    <script src="/script.js"></script>
+</html>
