@@ -13,7 +13,10 @@
 
             function log() {
                 var args = Array.prototype.slice.call(arguments);
-                if (oldLog) {
+                if (typeof oldLog === 'object') {
+                    // IE <= 9
+                    oldLog(args[0]);
+                } else if (typeof oldLog === 'function') {
                     oldLog.apply(console, args);
                 }
 
