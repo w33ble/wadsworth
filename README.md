@@ -1,5 +1,10 @@
 # serve-script
 
+[![NPM](https://nodei.co/npm/serve-script.png?compact=true)](https://nodei.co/npm/serve-script/)
+
+[![Build Status](https://drone.io/github.com/conradz/serve-script/status.png)](https://drone.io/github.com/conradz/serve-script/latest)
+[![Dependency Status](https://gemnasium.com/conradz/serve-script.png)](https://gemnasium.com/conradz/serve-script)
+
 Easily serve plain JS scripts to the browser with auto-generated HTML.
 
 It will automatically create the HTML page that the JS script will run in, and
