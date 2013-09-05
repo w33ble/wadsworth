@@ -1,11 +1,22 @@
 var test = require('tap').test,
     http = require('http'),
+    express = require('express'),
     request = require('request'),
     through = require('through'),
     serve = require('./');
 
 function createServer(options, callback) {
     var server = http.createServer(serve(options));
+    handleServer(server, callback);
+}
+
+function createExpressServer(options, callback) {
+    var app = express().use(serve(options)),
+        server = http.createServer(app);
+    handleServer(server, callback);
+}
+
+function handleServer(server, callback) {
     server.listen(0, function(err) {
         if (err) {
             return callback(err);
@@ -13,7 +24,7 @@ function createServer(options, callback) {
 
         var url = 'http://localhost:' + server.address().port + '/';
         callback(null, server, url);
-    })
+    });
 }
 
 function testScript(options, script, t) {
@@ -136,4 +147,30 @@ test('serve 404 for invalid file', function(t) {
             });
         });
     });
+});
+
+test('serve from Express server', function(t) {
+    createExpressServer({ src: '' }, function(err, server, url) {
+        t.notOk(err);
+
+        request(url, function(err, r) {
+            t.notOk(err);
+            t.equal(r.statusCode, 200);
+
+            server.close(function() {
+                t.end();
+            });
+        });
+    });
+});
+
+test('serve 404 from Express', function(t) {
+    createExpressServer({ src: '' }, function(err, server, url) {
+        t.notOk(err);
+        request(url + 'not_found', function(err, r) {
+            t.notOk(err);
+            t.equal(r.statusCode, 404);
+            server.close(function() { t.end(); });
+        })
+    })
 });

@@ -19,13 +19,17 @@ function handleError(err, resp) {
     resp.end(resp.toString(), 'utf8');
 }
 
+function notFound() {
+
+}
+
 function serve(options) {
     options = options || {};
 
     var src = options.src || '',
         page = template.call(options);
 
-    function handler(req, resp) {
+    function handler(req, resp, next) {
         if (req.url === '/') {
             resp.setHeader('Content-Type', 'text/html; charset=utf-8');
             resp.end(page);
@@ -45,9 +49,13 @@ function serve(options) {
                 }
             });
         } else {
-            resp.statusCode = 404;
-            resp.setHeader('Content-Type', 'text/plain');
-            resp.end('Not found');
+            if (next) {
+                next();
+            } else {
+                resp.statusCode = 404;
+                resp.setHeader('Content-Type', 'text/plain');
+                resp.end('Not found');
+            }
         }
     }
 

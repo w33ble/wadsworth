@@ -17,11 +17,26 @@ http.createServer(serve({ src: src })).listen(8000);
 // View http://localhost:8000/ in your browser to be alerted
 ```
 
+Also with [Express](https://github.com/visionmedia/express):
+
+```js
+var express = require('express'),
+    serve = require('serve-script');
+
+var src = 'alert("Hello World!);';
+express()
+    .use(server({ src: src }))
+    .listen(8000);
+```
+
 ## Reference
 
 Pass the options object as the first argument to the `serve-script` function.
 It will return a function that can be used as a request listener for a server
 that will serve the automatically generated HTML and JS code.
+
+The returned function can also be used as
+[Connect](http://www.senchalabs.org/connect/) middleware.
 
 ### src
 
