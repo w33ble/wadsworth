@@ -13,14 +13,27 @@ function getSource(src, callback) {
     }
 }
 
+function sendSource(src, resp) {
+    resp.setHeader(
+        'Content-Type',
+        'text/javascript; charset=utf-8');
+    if (typeof src.pipe === 'function') {
+        src.pipe(resp);
+    } else {
+        resp.end(src);
+    }
+}
+
 function handleError(err, resp) {
     resp.statusCode = 500;
     resp.setHeader('Content-Type', 'text/plain');
     resp.end(resp.toString(), 'utf8');
 }
 
-function notFound() {
-
+function notFound(resp) {
+    resp.statusCode = 404;
+    resp.setHeader('Content-Type', 'text/plain');
+    resp.end('Not found');
 }
 
 function serve(options) {
@@ -31,31 +44,30 @@ function serve(options) {
 
     function handler(req, resp, next) {
         if (req.url === '/') {
-            resp.setHeader('Content-Type', 'text/html; charset=utf-8');
-            resp.end(page);
+            root(req, resp);
         } else if (req.url === '/script.js') {
-            getSource(src, function(err, result) {
-                if (err) {
-                    return handleError(err, resp);
-                }
-
-                resp.setHeader(
-                    'Content-Type',
-                    'text/javascript; charset=utf-8');
-                if (typeof result.pipe === 'function') {
-                    result.pipe(resp);
-                } else {
-                    resp.end(result);
-                }
-            });
+            script(req, resp);
+        } else if (next) {
+            next();
         } else {
-            if (next) {
-                next();
-            } else {
-                resp.statusCode = 404;
-                resp.setHeader('Content-Type', 'text/plain');
-                resp.end('Not found');
+            notFound(resp);
+        }
+    }
+
+    function root(req, resp) {
+        resp.setHeader('Content-Type', 'text/html; charset=utf-8');
+        resp.end(page);
+    }
+
+    function script(req, resp) {
+        getSource(src, source);
+
+        function source(err, result) {
+            if (err) {
+                return handleError(err, resp);
             }
+
+            sendSource(result, resp);
         }
     }
 
