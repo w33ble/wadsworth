@@ -21,7 +21,6 @@ function sendSource(src, resp) {
     if (typeof src.pipe === 'function') {
         if (typeof src.on === 'function') {
             src.on('error', function(err) {
-                console.error('Handling error');
                 handleError(err, resp);
             });
         }
