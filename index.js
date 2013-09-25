@@ -17,7 +17,15 @@ function sendSource(src, resp) {
     resp.setHeader(
         'Content-Type',
         'text/javascript; charset=utf-8');
+
     if (typeof src.pipe === 'function') {
+        if (typeof src.on === 'function') {
+            src.on('error', function(err) {
+                console.error('Handling error');
+                handleError(err, resp);
+            });
+        }
+
         src.pipe(resp);
     } else {
         resp.end(src);

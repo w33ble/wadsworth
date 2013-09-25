@@ -134,6 +134,32 @@ test('handle error in source callback', function(t) {
     });
 });
 
+test('handle error event on source stream', function(t) {
+    var options = {
+        src: function(callback) {
+            var stream = through();
+            process.nextTick(function() {
+                stream.emit('error', new Error('Test'));
+                stream.end();
+            });
+
+            callback(null, stream);
+        }
+    };
+
+    createServer(options, function(err, server, url) {
+        t.error(err, 'created server');
+        request(url + 'script.js', function(err, r) {
+            t.error(err, 'requested script');
+            t.equal(r.statusCode, 500);
+
+            server.close(function() {
+                t.end();
+            });
+        });
+    });
+});
+
 test('serve 404 for invalid file', function(t) {
     createServer({ src: '' }, function(err, server, url) {
         t.notOk(err);
