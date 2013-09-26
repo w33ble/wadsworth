@@ -10,6 +10,8 @@ Easily serve plain JS scripts to the browser with auto-generated HTML.
 It will automatically create the HTML page that the JS script will run in, and
 will show `console.log` output on the page.
 
+![Show console output](http://i.cloudup.com/jXpFzRO1zG.png)
+
 ## Example
 
 ```js

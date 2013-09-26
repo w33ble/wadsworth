@@ -6,7 +6,7 @@
     console.warn('Warning!');
     console.debug('Debug message');
 
-    var count = 1;
+    var count = 0;
     function doLog() {
         if (count++ > 50) {
             return;
