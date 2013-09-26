@@ -1,9 +1,15 @@
 var _ = require('lodash'),
     fs = require('fs'),
     path = require('path'),
-    template = fs.readFileSync(path.join(__dirname, 'page.ejs'), 'utf8');
+    template = getStatic('index.ejs'),
+    consoleScript = getStatic('console.js'),
+    style = getStatic('style.css');
 
 template = _.template(template);
+
+function getStatic(file) {
+    return fs.readFileSync(path.join(__dirname, 'static', file), 'utf8');
+}
 
 function getSource(src, callback) {
     if (typeof src === 'function') {
@@ -44,7 +50,10 @@ function notFound(resp) {
 }
 
 function serve(options) {
-    options = options || {};
+    options = _.assign({
+        consoleScript: consoleScript,
+        style: style
+    }, options);
 
     var src = options.src || '',
         page = template.call(options);

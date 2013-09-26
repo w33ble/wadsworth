@@ -50,7 +50,7 @@ test('serve home page', function(t) {
             t.notOk(err);
             t.equal(r.statusCode, 200);
             t.ok(/^<!DOCTYPE html>/.test(body));
-            t.ok(/<pre id="output"/.test(body));
+            t.ok(/<div id="output"/.test(body));
 
             server.close(function() {
                 t.end();
@@ -66,7 +66,7 @@ test('skip output when noConsole is true', function(t) {
         request(url, function(err, r, body) {
             t.notOk(err);
             t.equal(r.statusCode, 200);
-            t.notOk(/<pre id="output"/.test(body));
+            t.notOk(/<div id="output"/.test(body));
 
             server.close(function() {
                 t.end();
