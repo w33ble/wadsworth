@@ -41,10 +41,11 @@ input {
     margin-top: 10px;
 }
 
-#log-filter ~ #output .log,
-#debug-filter ~ #output .debug,
-#warning-filter ~ #output .warn,
-#error-filter ~ #output .error {
+/* Use :not to prevent IE8 from hiding all the messages */
+#log-filter:not(:checked) ~ #output .log,
+#debug-filter:not(:checked) ~ #output .debug,
+#warning-filter:not(:checked) ~ #output .warn,
+#error-filter:not(:checked) ~ #output .error {
     display: none;
 }
 
