@@ -28,7 +28,7 @@
     "express": "~3.3.8"
   },
   "dependencies": {
-    "lodash": "~2.1.0",
+    "lodash": "~2.2.0",
     "nomnom": "~1.6.1"
   },
   "bin": {
