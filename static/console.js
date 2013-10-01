@@ -1,13 +1,28 @@
 (function() {
-    var body = document.getElementsByTagName('body')[0],
-        output = document.getElementById('output');
+    var container = document.getElementById('container'),
+        output = document.getElementById('output'),
+        console = (window.console || (window.console = {}));
+
+    function bind(func, context) {
+        if (typeof func.bind === 'function') {
+            // ES5 browsers
+            return func.bind(context);
+        } else if (typeof func.apply === 'function') {
+            // Pre-ES5 browsers
+            return function() { func.apply(context, arguments); };
+        } else {
+            // Old IE doesn't care about context
+            // and has no `.apply` on native functions
+            return func;
+        }
+    }
 
     function logger(type, oldLog) {
-        oldLog = oldLog || function() { };
+        oldLog = bind(oldLog || function() { }, console);
 
         return function() {
-            var isScrolled = (body.scrollTop ===
-                (body.scrollHeight - body.offsetHeight));
+            var isScrolled = (container.scrollTop ===
+                (container.scrollHeight - container.offsetHeight));
 
             var message = Array.prototype.join.call(arguments, ' ');
             oldLog(message);
@@ -20,12 +35,11 @@
 
             // Scroll to bottom if it was previously scrolled to the bottom
             if (isScrolled) {
-                body.scrollTop = body.scrollHeight - body.offsetHeight;
+                container.scrollTop = container.scrollHeight - container.offsetHeight;
             }
         };
     }
 
-    var console = window.console || (window.console = {});
     console.log = logger('log', console.log);
     console.debug = logger('debug', console.debug);
     console.info = logger('info', console.info);
