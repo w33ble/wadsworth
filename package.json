@@ -1,6 +1,6 @@
 {
   "name": "serve-script",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Easily serve plain JS scripts to the browser with auto-generated HTML.",
   "main": "index.js",
   "scripts": {
