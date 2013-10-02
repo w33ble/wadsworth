@@ -8,7 +8,7 @@
 Easily serve plain JS scripts to the browser with auto-generated HTML.
 
 It will automatically create the HTML page that the JS script will run in, and
-will show `console.log` output on the page.
+will show the console output (using `console.log`, etc.) on the page.
 
 ![Show console output](http://i.cloudup.com/jXpFzRO1zG.png)
 
@@ -36,7 +36,7 @@ express()
     .listen(8000);
 ```
 
-## Reference
+## Options
 
 Pass the options object as the first argument to the `serve-script` function.
 It will return a function that can be used as a request listener for a server
@@ -80,12 +80,10 @@ By default, the generated HTML page will display the output that was printed to
 the console with `console.log`. If `noConsole` is true, this behavior is
 disabled.
 
-
 ## serve-script(1)
 
-Creates an HTTP server that serves the provided JS script to browsers. Only
-installed if `serve-script` is installed globally with
-`npm install -g serve-script`.
+Creates an HTTP server that serves the provided JS script to browsers. To make
+available globally, install with `npm install -g serve-script`.
 
 Usage: `serve-script [file] [options]`
 
@@ -95,3 +93,4 @@ Usage: `serve-script [file] [options]`
 
  * `-p, --port`: The HTTP port to listen on (default 8000).
  * `--no-console`: Do not show `console.log` output on the web page.
+
