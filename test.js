@@ -49,8 +49,11 @@ test('serve home page', function(t) {
         request(url, function(err, r, body) {
             t.notOk(err);
             t.equal(r.statusCode, 200);
-            t.ok(/^<!DOCTYPE html>/.test(body));
-            t.ok(/<div id="output"/.test(body));
+            t.equal(body.indexOf('<!DOCTYPE html>'), 0);
+            t.notEqual(body.indexOf('<div id="output"'), -1);
+            t.notEqual(body.indexOf('(function'), -1);
+            t.notEqual(body.indexOf('<script>'), -1);
+            t.notEqual(body.indexOf('<style>'), -1);
 
             server.close(function() {
                 t.end();
@@ -66,7 +69,9 @@ test('skip output when noConsole is true', function(t) {
         request(url, function(err, r, body) {
             t.notOk(err);
             t.equal(r.statusCode, 200);
-            t.notOk(/<div id="output"/.test(body));
+            t.equal(body.indexOf('<script>'), -1);
+            t.equal(body.indexOf('<style>'), -1);
+            t.equal(body.indexOf('<div id="output"'), -1);
 
             server.close(function() {
                 t.end();
