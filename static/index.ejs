@@ -2,11 +2,11 @@
 <html>
     <head>
         <title>Test Page</title>
-        <% if (!this.noConsole) { %>
-        <style><%= this.style %></style>
+        <% if (!noConsole) { %>
+        <style><%- this.style %></style>
         <% } %>
     </head>
-    <% if (!this.noConsole) { %>
+    <% if (!noConsole) { %>
     <div id="container">
         <input id="log-filter" type="checkbox" checked><label for="log-filter">Log</label>
         <input id="debug-filter" type="checkbox" checked><label for="debug-filter">Debug</label>
@@ -16,7 +16,7 @@
         <div id="output"></div>
     </div>
 
-    <script><%= this.consoleScript %></script>
+    <script><%- this.consoleScript %></script>
     <% } %>
     <script src="script.js"></script>
 </html>

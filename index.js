@@ -1,11 +1,11 @@
-var _ = require('lodash'),
+var ejs = require('ejs'),
     fs = require('fs'),
     path = require('path'),
     template = getStatic('index.ejs'),
     consoleScript = getStatic('console.js'),
     style = getStatic('style.css');
 
-template = _.template(template);
+template = ejs.compile(template);
 
 function getStatic(file) {
     return fs.readFileSync(path.join(__dirname, 'static', file), 'utf8');
@@ -50,13 +50,15 @@ function notFound(resp) {
 }
 
 function serve(options) {
-    options = _.assign({
+    options = options || {};
+    var data = {
         consoleScript: consoleScript,
-        style: style
-    }, options);
+        style: style,
+        noConsole: !!options.noConsole
+    };
 
     var src = options.src || '',
-        page = template.call(options);
+        page = template(data);
 
     function handler(req, resp, next) {
         if (req.url === '/') {

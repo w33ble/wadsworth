@@ -28,8 +28,8 @@
     "express": "~3.3.8"
   },
   "dependencies": {
-    "lodash": "~2.2.0",
-    "nomnom": "~1.6.1"
+    "nomnom": "~1.6.1",
+    "ejs": "~0.8.5"
   },
   "bin": {
     "serve-script": "bin/serve-script"
