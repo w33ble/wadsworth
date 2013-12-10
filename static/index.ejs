@@ -3,7 +3,7 @@
     <head>
         <title>Test Page</title>
         <% if (!noConsole) { %>
-        <style><%- this.style %></style>
+        <style><%- style %></style>
         <% } %>
     </head>
     <% if (!noConsole) { %>
@@ -16,7 +16,7 @@
         <div id="output"></div>
     </div>
 
-    <script><%- this.consoleScript %></script>
+    <script><%- consoleScript %></script>
     <% } %>
     <script src="script.js"></script>
 </html>
