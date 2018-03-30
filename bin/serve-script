@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-var http = require('http'),
-    fs = require('fs'),
-    mri = require('mri'),
-    serve = require('../');
+/* eslint no-console: 0 */
+const http = require('http');
+const fs = require('fs');
+const mri = require('mri');
+const serve = require('../');
 
-var helpText = `Usage: serve-script [file] [options]
+const helpText = `Usage: serve-script [file] [options]
 
 file     JS file to serve (default stdin)
 
@@ -13,49 +14,49 @@ Options:
    -p, --port     Port to listen on  [8000]
    --no-console   Disable console.log redirection`;
 
-var opts = mri(process.argv.slice(2), {
+const opts = mri(process.argv.slice(2), {
   boolean: ['console'],
   alias: { port: 'p' },
-  default:{ console: true, port: 8080 },
+  default: { console: true, port: 8080 },
 });
 
+// eslint-disable-next-line prefer-destructuring
 opts.file = opts._[0];
 opts['no-console'] = !opts.console;
 
 if (opts.file == null) {
-    console.log(helpText);
-    return;
+  console.log(helpText);
+  process.exit();
 }
 
 function getSource(callback) {
-    if (!opts.file) {
-        var src = '';
-        process.stdin.resume();
-        process.stdin.on('data', function(data) {
-            src += data.toString();
-        });
-        process.stdin.on('close', function() {
-            callback(src);
-        });
-    } else {
-        callback(function(callback) {
-            callback(null, fs.createReadStream(opts.file));
-        });
-    }
+  if (!opts.file) {
+    let src = '';
+    process.stdin.resume();
+    process.stdin.on('data', data => {
+      src += data.toString();
+    });
+    process.stdin.on('close', () => {
+      callback(src);
+    });
+  } else {
+    callback(cb => {
+      cb(null, fs.createReadStream(opts.file));
+    });
+  }
 }
 
-getSource(function(src) {
-    var handler = serve({
-        noConsole: opts['no-console'],
-        src: src
-    });
+getSource(src => {
+  const handler = serve({
+    noConsole: opts['no-console'],
+    src,
+  });
 
-    http.createServer(handler)
-        .listen(opts.port, function(err) {
-            if (err) {
-                throw err;
-            }
+  http.createServer(handler).listen(opts.port, err => {
+    if (err) {
+      throw err;
+    }
 
-            console.log('Listening on port ' + opts.port);
-        });
+    console.log(`Listening on port ${opts.port}`);
+  });
 });

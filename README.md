@@ -15,10 +15,11 @@ will show the console output (using `console.log`, etc.) on the page.
 ## Example
 
 ```js
-var serve = require('serve-script'),
-    http = require('http');
+const serve = require('serve-script');
+const http = require('http');
 
-var src = 'alert("Hello World!");';
+const src = 'alert("Hello World!");';
+
 http.createServer(serve({ src: src })).listen(8000);
 
 // View http://localhost:8000/ in your browser to be alerted
@@ -27,13 +28,14 @@ http.createServer(serve({ src: src })).listen(8000);
 Also with [Express](https://github.com/visionmedia/express):
 
 ```js
-var express = require('express'),
-    serve = require('serve-script');
+const express = require('express');
+const serve = require('serve-script');
 
-var src = 'alert("Hello World!);';
+const src = 'alert("Hello World!);';
+
 express()
-    .use(server({ src: src }))
-    .listen(8000);
+  .use(server({ src }))
+  .listen(8000);
 ```
 
 ## Options
@@ -55,21 +57,21 @@ Examples:
 
 ```js
 server({
-    src: 'alert("Hello World!");'
+  src: 'alert("Hello World!");'
 });
 ```
 
 ```js
 server({
-    src: browserify().add('test.js').bundle()
+  src: browserify().add('test.js').bundle()
 });
 ```
 
 ```js
 serve({
-    src: function(callback) {
-        callback(myError, mySource);
-    }
+  src: function(callback) {
+    callback(myError, mySource);
+  }
 });
 ```
 

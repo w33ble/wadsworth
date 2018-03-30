@@ -1,11 +1,13 @@
 module.exports = function template(data) {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html>
     <head>
         <title>Test Page</title>
-        ${ !data.noConsole ? `<style>${data.style}</style>` : ''}
+        ${!data.noConsole ? `<style>${data.style}</style>` : ''}
     </head>
-    ${ !data.noConsole ? `
+    ${
+      !data.noConsole
+        ? `
         <div id="container">
             <input id="log-filter" type="checkbox" checked><label for="log-filter">Log</label>
             <input id="debug-filter" type="checkbox" checked><label for="debug-filter">Debug</label>
@@ -16,7 +18,9 @@ module.exports = function template(data) {
         </div>
 
         <script>${data.consoleScript}</script>
-    ` : '' }
+    `
+        : ''
+    }
     <script src="script.js"></script>
 </html>`;
-}
+};
