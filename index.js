@@ -1,11 +1,8 @@
-var ejs = require('ejs'),
-    fs = require('fs'),
+var fs = require('fs'),
     path = require('path'),
-    template = getStatic('index.ejs'),
+    template = require('./static/index.js'),
     consoleScript = getStatic('console.js'),
     style = getStatic('style.css');
-
-template = ejs.compile(template);
 
 function getStatic(file) {
     return fs.readFileSync(path.join(__dirname, 'static', file), 'utf8');

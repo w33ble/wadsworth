@@ -22,14 +22,13 @@
     "url": "https://github.com/conradz/serve-script/issues"
   },
   "devDependencies": {
-    "tap": "~0.4.4",
+    "express": "~3.3.8",
     "request": "~2.26.0",
-    "through": "~2.3.4",
-    "express": "~3.3.8"
+    "tap": "~0.4.4",
+    "through": "~2.3.4"
   },
   "dependencies": {
-    "nomnom": "~1.6.1",
-    "ejs": "~0.8.5"
+    "mri": "^1.1.0"
   },
   "bin": {
     "serve-script": "bin/serve-script"

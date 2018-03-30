@@ -1,27 +1,31 @@
 #!/usr/bin/env node
 
-var parser = require('nomnom'),
-    http = require('http'),
+var http = require('http'),
     fs = require('fs'),
+    mri = require('mri'),
     serve = require('../');
 
-var opts = parser.options({
-    file: {
-        position: 0,
-        help: 'JS file to serve (default stdin)'
-    },
+var helpText = `Usage: serve-script [file] [options]
 
-    port: {
-        abbr: 'p',
-        default: 8000,
-        help: 'Port to listen on'
-    },
+file     JS file to serve (default stdin)
 
-    'no-console': {
-        help: 'Disable console.log redirection',
-        flag: true
-    }
-}).parse();
+Options:
+   -p, --port     Port to listen on  [8000]
+   --no-console   Disable console.log redirection`;
+
+var opts = mri(process.argv.slice(2), {
+  boolean: ['console'],
+  alias: { port: 'p' },
+  default:{ console: true, port: 8080 },
+});
+
+opts.file = opts._[0];
+opts['no-console'] = !opts.console;
+
+if (opts.file == null) {
+    console.log(helpText);
+    return;
+}
 
 function getSource(callback) {
     if (!opts.file) {
