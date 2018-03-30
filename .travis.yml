@@ -18,3 +18,5 @@ branches:
   only:
     - master
     - /^v[0-9].*$/
+
+script: npm run test:ci
