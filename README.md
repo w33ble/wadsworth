@@ -1,9 +1,9 @@
 # serve-script
 
-[![NPM](https://nodei.co/npm/serve-script.png?compact=true)](https://nodei.co/npm/serve-script/)
-
-[![Build Status](https://drone.io/github.com/conradz/serve-script/status.png)](https://drone.io/github.com/conradz/serve-script/latest)
-[![Dependency Status](https://david-dm.org/conradz/serve-script.png)](https://david-dm.org/conradz/serve-script)
+[![GitHub license](https://img.shields.io/badge/license-BSD_2-bc0000.svg)](https://raw.githubusercontent.com/w33ble/serve-script/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/w33ble/serve-script.svg?branch=master)](https://travis-ci.org/w33ble/serve-script)
+[![npm](https://img.shields.io/npm/v/@w33ble/serve-script.svg)](https://www.npmjs.com/package/@w33ble/serve-script)
+[![Project Status](https://img.shields.io/badge/status-stable-brightgreen.svg)](https://nodejs.org/api/documentation.html#documentation_stability_index)
 
 Easily serve plain JS scripts to the browser with auto-generated HTML.
 
