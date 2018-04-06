@@ -5,6 +5,7 @@ module.exports = function template(data) {
         <title>Test Page</title>
         ${!data.noConsole ? `<style>${data.style}</style>` : ''}
     </head>
+    <div id="errors"></div>
     ${
       !data.noConsole
         ? `
@@ -21,6 +22,7 @@ module.exports = function template(data) {
     `
         : ''
     }
+    <script>${data.onErrorScript}</script>
     <script src="script.js"></script>
 </html>`;
 };
