@@ -1,8 +1,8 @@
-/* eslint prefer-rest-params: 0 */
+/* eslint prefer-rest-params: 0 no-var: 0 */
 function bindConsole() {
-  const container = document.getElementById('container');
-  const output = document.getElementById('output');
-  const console = window.console || (window.console = {});
+  var container = document.getElementById('container');
+  var output = document.getElementById('output');
+  var console = window.console || (window.console = {});
 
   function bind(func, context) {
     if (typeof func.bind === 'function') {
@@ -20,16 +20,18 @@ function bindConsole() {
     return func;
   }
 
+  function noop() {}
+
   function logger(type, oldLog) {
-    const boundLogger = bind(oldLog || (() => {}), console);
+    var boundLogger = bind(oldLog || noop, console);
 
     return function consoleLog() {
-      const isScrolled = container.scrollTop === container.scrollHeight - container.offsetHeight;
+      var node = document.createElement('pre');
+      var isScrolled = container.scrollTop === container.scrollHeight - container.offsetHeight;
+      var message = Array.prototype.join.call(arguments, ' ');
 
-      const message = Array.prototype.join.call(arguments, ' ');
       boundLogger(message);
 
-      const node = document.createElement('pre');
       node.className = type;
       node.appendChild(document.createTextNode(message));
       output.appendChild(node);
