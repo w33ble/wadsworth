@@ -7,6 +7,7 @@ function getStatic(file) {
 }
 
 const consoleScript = getStatic('console.js');
+const onErrorScript = getStatic('onerror.js');
 const style = getStatic('style.css');
 
 function getSource(src, callback) {
@@ -50,6 +51,7 @@ function sendSource(src, resp) {
 module.exports = function serve(options = {}) {
   const data = {
     consoleScript,
+    onErrorScript,
     style,
     noConsole: !!options.noConsole,
   };

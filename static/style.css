@@ -41,6 +41,15 @@ input {
     margin-top: 10px;
 }
 
+#errors {
+    background-color: #DD0000;
+    color: #FFFFFF;
+}
+
+#errors pre {
+    padding: 4px 10px;
+}
+
 /* Use :not to prevent IE8 from hiding all the messages */
 #log-filter:not(:checked) ~ #output .log,
 #debug-filter:not(:checked) ~ #output .debug,
