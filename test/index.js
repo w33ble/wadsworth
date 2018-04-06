@@ -51,6 +51,7 @@ test('serve home page', t => {
       t.equal(body.indexOf('<!DOCTYPE html>'), 0);
       t.notEqual(body.indexOf('<div id="output"'), -1);
       t.notEqual(body.indexOf('function bindConsole'), -1);
+      t.notEqual(body.indexOf('function windowOnError'), -1);
       t.notEqual(body.indexOf('bindConsole()'), -1);
       t.notEqual(body.indexOf('<script>'), -1);
       t.notEqual(body.indexOf('<style>'), -1);
@@ -69,8 +70,8 @@ test('skip output when noConsole is true', t => {
     request(url, (err2, r, body) => {
       t.notOk(err2);
       t.equal(r.statusCode, 200);
-      t.equal(body.indexOf('<script>'), -1);
-      t.equal(body.indexOf('<style>'), -1);
+      t.notEqual(body.indexOf('function windowOnError'), -1);
+      t.equal(body.indexOf('function bindConsole'), -1);
       t.equal(body.indexOf('<div id="output"'), -1);
 
       server.close(() => {
