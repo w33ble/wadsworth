@@ -30,6 +30,11 @@
   "bugs": {
     "url": "https://github.com/w33ble/wadsworth/issues"
   },
+  "files": [
+    "bin/",
+    "static/",
+    "index.js"
+  ],
   "lint-staged": {
     "*.{js,json,css}": [
       "prettier --write"
