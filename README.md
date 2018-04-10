@@ -2,7 +2,7 @@
 
 [![GitHub license](https://img.shields.io/badge/license-BSD_2-bc0000.svg)](https://raw.githubusercontent.com/w33ble/wadsworth/master/LICENSE)
 [![Build Status](https://img.shields.io/travis/w33ble/wadsworth.svg?branch=master)](https://travis-ci.org/w33ble/wadsworth)
-[![npm](https://img.shields.io/npm/v/@w33ble/wadsworth.svg)](https://www.npmjs.com/package/@w33ble/wadsworth)
+[![npm](https://img.shields.io/npm/v/wadsworth.svg)](https://www.npmjs.com/package/wadsworth)
 [![Project Status](https://img.shields.io/badge/status-stable-brightgreen.svg)](https://nodejs.org/api/documentation.html#documentation_stability_index)
 
 Easily serve plain JS scripts to the browser with auto-generated HTML.
