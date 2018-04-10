@@ -18,6 +18,7 @@
   "keywords": [
     "browser",
     "server",
+    "static server",
     "run",
     "script"
   ],
@@ -49,9 +50,9 @@
     "eslint-plugin-react": "^7.1.0",
     "express": "~3.3.8",
     "husky": "^0.14.3",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "^7.0.4",
     "prettier": "^1.9.0",
-    "request": "~2.26.0",
+    "request": "^2.85.0",
     "tap": "~0.4.4",
     "through": "~2.3.4"
   },
