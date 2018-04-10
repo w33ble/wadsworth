@@ -1,8 +1,8 @@
-# serve-script
+# wadsworth
 
-[![GitHub license](https://img.shields.io/badge/license-BSD_2-bc0000.svg)](https://raw.githubusercontent.com/w33ble/serve-script/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/w33ble/serve-script.svg?branch=master)](https://travis-ci.org/w33ble/serve-script)
-[![npm](https://img.shields.io/npm/v/@w33ble/serve-script.svg)](https://www.npmjs.com/package/@w33ble/serve-script)
+[![GitHub license](https://img.shields.io/badge/license-BSD_2-bc0000.svg)](https://raw.githubusercontent.com/w33ble/wadsworth/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/w33ble/wadsworth.svg?branch=master)](https://travis-ci.org/w33ble/wadsworth)
+[![npm](https://img.shields.io/npm/v/@w33ble/wadsworth.svg)](https://www.npmjs.com/package/@w33ble/wadsworth)
 [![Project Status](https://img.shields.io/badge/status-stable-brightgreen.svg)](https://nodejs.org/api/documentation.html#documentation_stability_index)
 
 Easily serve plain JS scripts to the browser with auto-generated HTML.
@@ -15,7 +15,7 @@ will show the console output (using `console.log`, etc.) on the page.
 ## Example
 
 ```js
-const serve = require('serve-script');
+const serve = require('wadsworth');
 const http = require('http');
 
 const src = 'alert("Hello World!");';
@@ -29,7 +29,7 @@ Also with [Express](https://github.com/visionmedia/express):
 
 ```js
 const express = require('express');
-const serve = require('serve-script');
+const serve = require('wadsworth');
 
 const src = 'alert("Hello World!);';
 
@@ -40,7 +40,7 @@ express()
 
 ## Options
 
-Pass the options object as the first argument to the `serve-script` function.
+Pass the options object as the first argument to the `wadsworth` function.
 It will return a function that can be used as a request listener for a server
 that will serve the automatically generated HTML and JS code.
 
@@ -82,12 +82,12 @@ By default, the generated HTML page will display the output that was printed to
 the console with `console.log`. If `noConsole` is true, this behavior is
 disabled.
 
-## serve-script(1)
+## wadsworth(1)
 
 Creates an HTTP server that serves the provided JS script to browsers. To make
-available globally, install with `npm install -g serve-script`.
+available globally, install with `npm install -g wadsworth`.
 
-Usage: `serve-script [file] [options]`
+Usage: `wadsworth [file] [options]`
 
 `file` specifies the JS file to serve. If no file is provided, uses stdin.
 

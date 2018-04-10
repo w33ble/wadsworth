@@ -2,7 +2,7 @@ module.exports = function template(data) {
   return `<!DOCTYPE html>
 <html>
     <head>
-        <title>Test Page</title>
+        <title>Wadsworth Page</title>
         ${!data.noConsole ? `<style>${data.style}</style>` : ''}
     </head>
     <div id="errors"></div>

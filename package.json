@@ -1,19 +1,19 @@
 {
-  "name": "@w33ble/serve-script",
+  "name": "wadsworth",
   "version": "0.2.0",
   "description": "Easily serve plain JS scripts to the browser with auto-generated HTML.",
   "main": "index.js",
   "bin": {
-    "serve-script": "bin/serve-script"
+    "wadsworth": "bin/wadsworth"
   },
   "scripts": {
-    "lint": "eslint *.js \"static/**/*.js\" \"test/**/*.js\" bin/serve-script",
+    "lint": "eslint *.js \"static/**/*.js\" \"test/**/*.js\" bin/wadsworth",
     "test": "tap test/index.js",
     "test:ci": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/w33ble/serve-script"
+    "url": "https://github.com/w33ble/wadsworth"
   },
   "keywords": [
     "browser",
@@ -27,7 +27,7 @@
   ],
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/w33ble/serve-script/issues"
+    "url": "https://github.com/w33ble/wadsworth/issues"
   },
   "lint-staged": {
     "*.{js,json,css}": [
