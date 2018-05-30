@@ -9,7 +9,8 @@
   "scripts": {
     "lint": "eslint *.js \"static/**/*.js\" \"test/**/*.js\" bin/wadsworth",
     "test": "tap test/index.js",
-    "test:ci": "npm run lint && npm run test"
+    "test:ci": "npm run lint && npm run test",
+    "version": "npm-auto-version"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,7 @@
     "run",
     "script"
   ],
-  "authors": [
-    "Conrad Zimmerman <me@conradz.com>",
-    "Joe Fleming (https://github.com/w33ble)"
-  ],
+  "author": "Joe Fleming (https://github.com/w33ble)",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/w33ble/wadsworth/issues"
@@ -36,9 +34,17 @@
     "index.js"
   ],
   "lint-staged": {
-    "*.{js,json,css}": [
-      "prettier --write"
-    ]
+    "ignore": [
+      "package.json"
+    ],
+    "linters": {
+      "*.{js,mjs}": [
+        "eslint --fix"
+      ],
+      "*.{js,mjs,json,css}": [
+        "prettier --write"
+      ]
+    }
   },
   "prettier": {
     "printWidth": 100,
@@ -46,6 +52,7 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
+    "@w33ble/npm-auto-tools": "*",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
