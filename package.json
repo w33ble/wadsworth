@@ -69,6 +69,7 @@
     "through": "~2.3.4"
   },
   "dependencies": {
-    "mri": "^1.1.0"
+    "mri": "^1.1.0",
+    "mri-help": "^0.2.0"
   }
 }
