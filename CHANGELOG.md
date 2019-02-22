@@ -1,5 +1,8 @@
 ### Changelog
 
+#### [v0.2.1](https://github.com/w33ble/wadsworth/compare/v0.2.0...v0.2.1) (22 February 2019)
+- chore: bump packages [`#1`](https://github.com/w33ble/wadsworth/pull/1)
+
 #### [v0.2.0](https://github.com/w33ble/wadsworth/compare/v0.1.3...v0.2.0) (6 April 2018)
 - Feat: log errors [`#1`](https://github.com/w33ble/wadsworth/pull/1)
 - feat: add error output [`1ac6aee`](https://github.com/w33ble/wadsworth/commit/1ac6aee4a68d0527a04002db993ecb7710123070)
@@ -55,7 +58,6 @@
 - Release 0.0.2 [`0f721bf`](https://github.com/w33ble/wadsworth/commit/0f721bfd202332e0166785dd7f2a567aa9b7643d)
 
 #### v0.0.1 (15 August 2013)
-- Release 0.0.1 [`1f25e3a`](https://github.com/w33ble/wadsworth/commit/1f25e3a8ca9c7a4ec5df03a7bcf03f44d15ac736)
-- Add travis integration [`4755212`](https://github.com/w33ble/wadsworth/commit/475521253cbeb3c841b7f57ad81bc29c7be7bb6d)
 - Initial commit [`e1ba044`](https://github.com/w33ble/wadsworth/commit/e1ba04458216f40e2916c4c76dbdf3e647c26662)
-
+- Add travis integration [`4755212`](https://github.com/w33ble/wadsworth/commit/475521253cbeb3c841b7f57ad81bc29c7be7bb6d)
+- Release 0.0.1 [`1f25e3a`](https://github.com/w33ble/wadsworth/commit/1f25e3a8ca9c7a4ec5df03a7bcf03f44d15ac736)
