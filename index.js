@@ -18,19 +18,17 @@ function getSource(src, callback) {
   }
 }
 
-/* eslint no-param-reassign: 0 */
 function handleError(err, resp) {
-  resp.statusCode = 500;
+  resp.statusCode = 500; // eslint-disable-line no-param-reassign
   resp.setHeader('Content-Type', 'text/plain');
   resp.end(resp.toString(), 'utf8');
 }
 
 function notFound(resp) {
-  resp.statusCode = 404;
+  resp.statusCode = 404; // eslint-disable-line no-param-reassign
   resp.setHeader('Content-Type', 'text/plain');
   resp.end('Not found');
 }
-/* eslint no-param-reassign: 2 */
 
 function sendSource(src, resp) {
   resp.setHeader('Content-Type', 'text/javascript; charset=utf-8');
