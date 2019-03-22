@@ -4,8 +4,7 @@
     "commonjs": true
   },
   "parserOptions": {
-    "ecmaVersion": 8,
-    "sourceType": "module"
+    "ecmaVersion": 8
   },
   "extends": [
     "airbnb",
@@ -27,6 +26,6 @@
         "optionalDependencies": false,
         "peerDependencies": false
       }
-    ],
+    ]
   }
 }

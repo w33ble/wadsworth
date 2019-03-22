@@ -49,15 +49,7 @@
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
-    "trailingComma": "es5",
-    "overrides": [
-      {
-        "files": "bin/wadsworth",
-        "options": {
-          "parser": "babylon"
-        }
-      }
-    ]
+    "trailingComma": "es5"
   },
   "devDependencies": {
     "@w33ble/npm-auto-tools": "*",

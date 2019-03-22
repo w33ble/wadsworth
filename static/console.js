@@ -8,7 +8,9 @@ function bindConsole() {
     if (typeof func.bind === 'function') {
       // ES5 browsers
       return func.bind(context);
-    } else if (typeof func.apply === 'function') {
+    }
+
+    if (typeof func.apply === 'function') {
       // Pre-ES5 browsers
       return function logExec() {
         func.apply(context, arguments);
