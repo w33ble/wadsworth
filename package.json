@@ -17,11 +17,17 @@
     "url": "https://github.com/w33ble/wadsworth"
   },
   "keywords": [
-    "browser",
+    "serve",
+    "serve script",
+    "serve-script",
+    "script",
     "server",
     "static server",
-    "run",
-    "script"
+    "http-server",
+    "http",
+    "express",
+    "console",
+    "logger"
   ],
   "author": "Joe Fleming (https://github.com/w33ble)",
   "license": "BSD-2-Clause",
