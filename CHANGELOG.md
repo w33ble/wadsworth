@@ -1,5 +1,7 @@
 ### Changelog
 
+### [v1.0.0](https://github.com/w33ble/wadsworth/compare/v0.2.2...v1.0.0) (23 March 2019)
+
 #### [v0.2.2](https://github.com/w33ble/wadsworth/compare/v0.2.1...v0.2.2) (22 February 2019)
 
 #### [v0.2.1](https://github.com/w33ble/wadsworth/compare/v0.2.0...v0.2.1) (22 February 2019)
