@@ -1,92 +1,58 @@
-const http = require('http');
-const { test } = require('tap');
-const request = require('request');
+const test = require('zora');
 const through = require('through');
-const serve = require('..');
+const utils = require('./utils');
 
-function handleServer(server, callback) {
-  server.listen(0, err => {
-    if (err) callback(err);
-    else {
-      const url = `http://localhost:${server.address().port}/`;
-      callback(null, server, url);
-    }
-  });
+async function testScript(options, script, t) {
+  const { server, scriptjs } = await utils.createServer(options);
+  const { res, body } = await utils.request(scriptjs);
+
+  t.equal(res.status, 200);
+  t.equal(body, script);
+
+  await utils.closeServer(server);
 }
 
-function createServer(options, callback) {
-  const server = http.createServer(serve(options));
-  handleServer(server, callback);
-}
+test('serve home page', async t => {
+  const { server, url } = await utils.createServer({ src: '' });
+  const { res, body } = await utils.request(url);
 
-function testScript(options, script, t) {
-  createServer(options, (err, server, url) => {
-    t.notOk(err);
+  t.equal(res.status, 200);
+  t.equal(body.indexOf('<!DOCTYPE html>'), 0);
+  t.notEqual(body.indexOf('<div id="output"'), -1);
+  t.notEqual(body.indexOf('function bindConsole'), -1);
+  t.notEqual(body.indexOf('function windowOnError'), -1);
+  t.notEqual(body.indexOf('bindConsole()'), -1);
+  t.notEqual(body.indexOf('<script>'), -1);
+  t.notEqual(body.indexOf('<style>'), -1);
 
-    request(`${url}script.js`, (err2, r, body) => {
-      t.notOk(err2);
-      t.equal(r.statusCode, 200);
-      t.equal(body, script);
-
-      server.close(() => {
-        t.end();
-      });
-    });
-  });
-}
-
-test('serve home page', t => {
-  createServer({ src: '' }, (err, server, url) => {
-    t.notOk(err);
-    request(url, (err2, r, body) => {
-      t.notOk(err2);
-      t.equal(r.statusCode, 200);
-      t.equal(body.indexOf('<!DOCTYPE html>'), 0);
-      t.notEqual(body.indexOf('<div id="output"'), -1);
-      t.notEqual(body.indexOf('function bindConsole'), -1);
-      t.notEqual(body.indexOf('function windowOnError'), -1);
-      t.notEqual(body.indexOf('bindConsole()'), -1);
-      t.notEqual(body.indexOf('<script>'), -1);
-      t.notEqual(body.indexOf('<style>'), -1);
-
-      server.close(() => {
-        t.end();
-      });
-    });
-  });
+  await utils.closeServer(server);
 });
 
-test('skip output when noConsole is true', t => {
-  createServer({ src: '', noConsole: true }, (err, server, url) => {
-    t.notOk(err);
+test('skip output when noConsole is true', async t => {
+  const { server, url } = await utils.createServer({ src: '', noConsole: true });
+  const { res, body } = await utils.request(url);
 
-    request(url, (err2, r, body) => {
-      t.notOk(err2);
-      t.equal(r.statusCode, 200);
-      t.notEqual(body.indexOf('function windowOnError'), -1);
-      t.equal(body.indexOf('function bindConsole'), -1);
-      t.equal(body.indexOf('<div id="output"'), -1);
+  t.equal(res.status, 200);
+  t.notEqual(body.indexOf('function windowOnError'), -1);
+  t.equal(body.indexOf('function bindConsole'), -1);
+  t.equal(body.indexOf('<div id="output"'), -1);
 
-      server.close(() => {
-        t.end();
-      });
-    });
-  });
+  await utils.closeServer(server);
 });
 
-test('serve js script', t => {
+test('serve js script', async t => {
   const script = 'alert("Hello World!");';
   const options = { src: script };
-  testScript(options, script, t);
+  await testScript(options, script, t);
 });
 
-test('serve js script from Buffer', t => {
+test('serve js script from Buffer', async t => {
   const script = 'alert("Hello World!");';
   const options = { src: Buffer.from(script, 'utf8') };
-  testScript(options, script, t);
+  await testScript(options, script, t);
 });
 
-test('serve js from callback function', t => {
+test('serve js from callback function', async t => {
   const script = 'alert("Hello World!");';
   const options = {
     src(callback) {
@@ -95,10 +61,10 @@ test('serve js from callback function', t => {
       });
     },
   };
-  testScript(options, script, t);
+  await testScript(options, script, t);
 });
 
-test('serve js from stream in callback function', t => {
+test('serve js from stream in callback function', async t => {
   const script = 'alert("Hello World!");';
   const options = {
     src: callback => {
@@ -111,32 +77,24 @@ test('serve js from stream in callback function', t => {
       callback(null, stream);
     },
   };
-  testScript(options, script, t);
+  await testScript(options, script, t);
 });
 
-test('handle error in source callback', t => {
-  const options = {
+test('handle error in source callback', async t => {
+  const { server, scriptjs } = await utils.createServer({
     src(callback) {
       callback(new Error('Test error'));
     },
-  };
-
-  createServer(options, (err, server, url) => {
-    t.notOk(err);
-
-    request(`${url}script.js`, (err2, r) => {
-      t.notOk(err2);
-      t.equal(r.statusCode, 500);
-
-      server.close(() => {
-        t.end();
-      });
-    });
   });
+  const { res } = await utils.request(scriptjs);
+
+  t.equal(res.status, 500);
+
+  await utils.closeServer(server);
 });
 
-test('handle error event on source stream', t => {
-  const options = {
+test('handle error event on source stream', async t => {
+  const { server, scriptjs } = await utils.createServer({
     src: callback => {
       const stream = through();
       process.nextTick(() => {
@@ -146,32 +104,19 @@ test('handle error event on source stream', t => {
 
       callback(null, stream);
     },
-  };
-
-  createServer(options, (err, server, url) => {
-    t.error(err, 'created server');
-    request(`${url}script.js`, (err2, r) => {
-      t.error(err2, 'requested script');
-      t.equal(r.statusCode, 500);
-
-      server.close(() => {
-        t.end();
-      });
-    });
   });
+  const { res } = await utils.request(scriptjs);
+
+  t.equal(res.status, 500);
+
+  await utils.closeServer(server);
 });
 
-test('serve 404 for invalid file', t => {
-  createServer({ src: '' }, (err, server, url) => {
-    t.notOk(err);
+test('serve 404 for invalid file', async t => {
+  const { server, url } = await utils.createServer({ src: '' });
+  const { res } = await utils.request(`${url}not_found`);
 
-    request(`${url}not_found`, (err2, r) => {
-      t.notOk(err2);
-      t.equal(r.statusCode, 404);
+  t.equal(res.status, 404);
 
-      server.close(() => {
-        t.end();
-      });
-    });
-  });
+  await utils.closeServer(server);
 });

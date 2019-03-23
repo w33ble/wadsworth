@@ -1,8 +1,8 @@
 const http = require('http');
-const { test } = require('tap');
+const test = require('zora');
 const express = require('express');
-const request = require('request');
-const serve = require('../');
+const serve = require('..');
+const utils = require('./utils');
 
 function handleServer(server, callback) {
   server.listen(0, err => {
@@ -14,36 +14,31 @@ function handleServer(server, callback) {
   });
 }
 
-function createExpressServer(options, callback) {
+async function createExpressServer(options) {
   const app = express().use(serve(options));
   const server = http.createServer(app);
-  handleServer(server, callback);
+  return new Promise((resolve, reject) => {
+    handleServer(server, (err, srv, url) => {
+      if (err) reject(err);
+      else resolve({ server: srv, url, scriptjs: `${url}script.js` });
+    });
+  });
 }
 
-test('serve from Express server', t => {
-  createExpressServer({ src: '' }, (err, server, url) => {
-    t.notOk(err);
+test('serve from Express server', async t => {
+  const { server, url } = await createExpressServer({ src: '' });
+  const { res } = await utils.request(url);
 
-    request(url, (err2, r) => {
-      t.notOk(err2);
-      t.equal(r.statusCode, 200);
+  t.equal(res.status, 200);
 
-      server.close(() => {
-        t.end();
-      });
-    });
-  });
+  utils.closeServer(server);
 });
 
-test('serve 404 from Express', t => {
-  createExpressServer({ src: '' }, (err, server, url) => {
-    t.notOk(err);
-    request(`${url}not_found`, (err2, r) => {
-      t.notOk(err2);
-      t.equal(r.statusCode, 404);
-      server.close(() => {
-        t.end();
-      });
-    });
-  });
+test('serve 404 from Express', async t => {
+  const { server, url } = await createExpressServer({ src: '' });
+  const { res } = await utils.request(`${url}not_found`);
+
+  t.equal(res.status, 404);
+
+  utils.closeServer(server);
 });
